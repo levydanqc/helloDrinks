@@ -1,66 +1,63 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{usager.pseudo}} - HelloDrinks</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h1>HelloDrinks</h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <h2>{{usager.pseudo}}</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.email}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.telephone}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.adresse}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.ville}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.codePostal}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.pays}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.dateNaissance}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.sexe}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>{{usager.poids}}</p>
-        </div>
-  </body>
-</html>
+{% extends 'master.html' %}
+<!-- -->
+{% block title %} {{ usager.pseudo }} HelloDrinks {% endblock %}
+<!-- -->
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>HelloDrinks</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>{{usager.pseudo}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.email}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.telephone}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.adresse}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.ville}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.codePostal}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.pays}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.dateNaissance}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.sexe}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{usager.poids}}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

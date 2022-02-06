@@ -1,3 +1,25 @@
-.logo {
+* {
+  box-sizing: border-box;
+}
+
+img.logo {
   width: 10%;
+}
+
+main {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+img {
+  object-fit: cover;
+  &.left {
+    object-position: left;
+  }
+  &.right {
+    object-position: right;
+  }
 }

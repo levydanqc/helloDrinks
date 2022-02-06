@@ -1,5 +1,18 @@
-.logo {
-  width: 10%;
-}
+* {
+  box-sizing: border-box; }
 
-/*# sourceMappingURL=styles.css.map */
+img.logo {
+  width: 10%; }
+
+main {
+  height: 100%; }
+
+body {
+  height: 100%; }
+
+img {
+  object-fit: cover; }
+  img.left {
+    object-position: left; }
+  img.right {
+    object-position: right; }

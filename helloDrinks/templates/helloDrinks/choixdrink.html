@@ -1,4 +1,4 @@
-{% extends 'helloDrinks/master.html' %} {% load static %} 
+{% extends 'helloDrinks/master.html' %} {% load static %}
 
 <!-- -->
 {% block title %}Choix Drink{% endblock %}
@@ -9,7 +9,7 @@
   <h1 class="my-1">Choix du drink!</h1>
 </div>
 <div class="container m-auto my-5 row row-cols-1 row-cols-md-3 g-3">
-  {% for drink in cocktails %}
+  {% if cocktails|length %} {% for drink in cocktails %}
   <div class="col">
     <div class="card h-100">
       <img src="{{drink.strDrinkThumb}}" class="card-img-top" />
@@ -28,7 +28,10 @@
       </div>
     </div>
   </div>
-  {% endfor %}
-</div>
+  {% endfor %} {% else %}
+  <h2 class="card-title text-danger">Aucun drink trouvé...</h2>
+  {% endif %}
+  </div>
 
-{% endblock %}
+  {% endblock %}
+</div>

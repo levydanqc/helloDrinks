@@ -15,11 +15,16 @@ body {
 }
 
 img {
-  object-fit: cover;
+  &.left.right {
+    object-fit: cover;
+  }
   &.left {
     object-position: left;
   }
   &.right {
     object-position: right;
+  }
+  &.thumbnail {
+    object-fit: none;
   }
 }

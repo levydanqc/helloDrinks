@@ -10,9 +10,14 @@ main {
 body {
   height: 100%; }
 
-img {
+img.left.right {
   object-fit: cover; }
-  img.left {
-    object-position: left; }
-  img.right {
-    object-position: right; }
+
+img.left {
+  object-position: left; }
+
+img.right {
+  object-position: right; }
+
+img.thumbnail {
+  object-fit: none; }

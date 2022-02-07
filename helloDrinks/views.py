@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
+from matplotlib.image import thumbnail
 from .forms import UsagerForm
 from .models import Usager
-# Create your views here.
+import requests
 
 
 def index(request):
@@ -19,4 +20,13 @@ def index(request):
 
 def usager(request, usager_id):
     usager = Usager.objects.get(id=usager_id)
-    return render(request, 'helloDrinks/usager.html', {'usager': usager})
+    alcool = requests.get(
+        "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=%s" % usager.alcoolPref)
+    ingredients = alcool.json()["ingredients"]
+    thumbnail = requests.get(
+        "https://www.thecocktaildb.com/images/ingredients/%s.png" % usager.alcoolPref)
+    return render(request, 'helloDrinks/usager.html', {'usager': usager, 'ingredients': ingredients, "thumbnail": str(thumbnail.status_code)})
+
+
+def choixDrinks(request):
+    return render(request, 'helloDrinks/choixDrinks.html')

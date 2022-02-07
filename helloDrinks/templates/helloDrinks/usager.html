@@ -1,63 +1,71 @@
-{% extends 'master.html' %}
+{% extends 'helloDrinks/master.html' %} {% load static %}
 <!-- -->
-{% block title %} {{ usager.pseudo }} HelloDrinks {% endblock %}
+{% block title %}{{ usager.pseudo }}{% endblock %}
 <!-- -->
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>HelloDrinks</h1>
+  <div class="d-flex justify-content-around mb-5 row">
+    <div class="w-25">
+      <div class="d-flex justify-content-center">
+        <h4 class="mx-2 my-3">{{usager.prenom|capfirst}}</h4>
+        <h4 class="mx-2 my-3">{{usager.nom|capfirst}}</h4>
+      </div>
+      <img
+        class="w-100"
+        src="{% static 'helloDrinks/assets/account.png' %}"
+        alt="Account"
+      />
+    </div>
+    <div class="col-auto">
+      <div class="row my-3">
+        <h1>{{usager.pseudo|capfirst}}</h1>
+      </div>
+      <div class="row my-3">
+        <i class="bi bi-envelope mx-2 col-auto"></i>
+        {{usager.email}}
+      </div>
+      <div class="row my-3">
+        <i class="bi bi-geo-alt mx-2 col-auto"></i>
+        {{usager.adresse|capfirst}}
+      </div>
+      <div class="row my-3">
+        <i class="bi bi-calendar-event mx-2 col-auto"></i>
+        {{usager.ddn}}
+      </div>
+      <div class="row my-3">
+        <i class="bi bi-cup-straw mx-2 col-auto"></i>
+        {{usager.alcoolPref|capfirst}}
+      </div>
+    </div>
+    <div class="col-auto align-self-center">
+      <a href="#" class="btn btn-primary w-100 fs-1 fw-2">
+        Choisir mon <br />prochain drinks!
+      </a>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>{{usager.pseudo}}</h2>
+  <div class="w-100 row">
+    {% if thumbnail == '200' %}
+    <a href="{% url 'choixDrink' %}">
+      <img
+        src="https://www.thecocktaildb.com/images/ingredients/{{usager.alcoolPref}}.png"
+        alt="Alcool"
+        class="col-3 thumbnail"
+      />
+    </a>
+    {% endif %} {% for ingredient in ingredients %}
+    <div class="col-9 my-3">
+      <div class="col-auto">
+        {% if ingredient.strIngredient %}
+        <h4>{{ingredient.strIngredient}}</h4>
+        {% endif %} {% if ingredient.strABV %}
+        <sub>{{ingredient.strABV}}%</sub>
+        {% endif %} {% if ingredient.strDescription %}
+        <p>{{ingredient.strDescription}}</p>
+        {% endif %}
+      </div>
     </div>
+    {% endfor %}
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.email}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.telephone}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.adresse}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.ville}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.codePostal}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.pays}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.dateNaissance}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.sexe}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{{usager.poids}}</p>
-    </div>
-  </div>
+
+  {% endblock %}
 </div>
-{% endblock %}

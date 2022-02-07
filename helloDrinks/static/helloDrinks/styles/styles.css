@@ -10,8 +10,9 @@ main {
 body {
   height: 100%; }
 
-img.left.right {
-  object-fit: cover; }
+img.left, img.right {
+  object-fit: cover;
+  animation: 25s linear infinite scroll; }
 
 img.left {
   object-position: left; }
@@ -21,3 +22,9 @@ img.right {
 
 img.thumbnail {
   object-fit: none; }
+
+@keyframes scroll {
+  0% {
+    object-position: 0%; }
+  100% {
+    object-position: 100%; } }

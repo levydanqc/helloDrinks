@@ -15,8 +15,10 @@ body {
 }
 
 img {
-  &.left.right {
+  &.left,
+  &.right {
     object-fit: cover;
+    animation: 25s linear infinite scroll;
   }
   &.left {
     object-position: left;
@@ -26,5 +28,16 @@ img {
   }
   &.thumbnail {
     object-fit: none;
+  }
+}
+
+// Animations
+@keyframes scroll {
+  0% {
+    object-position: 0%;
+  }
+
+  100% {
+    object-position: 100%;
   }
 }

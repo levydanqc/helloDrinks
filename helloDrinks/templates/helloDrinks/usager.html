@@ -38,22 +38,23 @@
       </div>
     </div>
     <div class="col-auto align-self-center">
-      <a href="#" class="btn btn-primary w-100 fs-1 fw-2">
+      <a
+        href="{% url 'choixDrink' usager.id %}"
+        class="btn btn-primary w-100 fs-1 fw-2"
+      >
         Choisir mon <br />prochain drinks!
       </a>
     </div>
   </div>
   <div class="w-100 row">
     {% if thumbnail == '200' %}
-    <a href="{% url 'choixDrink' %}">
-      <img
-        src="https://www.thecocktaildb.com/images/ingredients/{{usager.alcoolPref}}.png"
-        alt="Alcool"
-        class="col-3 thumbnail"
-      />
-    </a>
+    <img
+      src="https://www.thecocktaildb.com/images/ingredients/{{usager.alcoolPref}}.png"
+      alt="Alcool"
+      class="col-3 thumbnail"
+    />
     {% endif %} {% for ingredient in ingredients %}
-    <div class="col-9 my-3">
+    <div class="col-9 mb-3">
       <div class="col-auto">
         {% if ingredient.strIngredient %}
         <h4>{{ingredient.strIngredient}}</h4>

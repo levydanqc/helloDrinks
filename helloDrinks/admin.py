@@ -11,11 +11,11 @@ class AlcoolAdmin(admin.ModelAdmin):
 
 
 class DrinkHistoriqueAdmin(admin.ModelAdmin):
-    list_display = ('usager', 'alcool', 'date')
+    list_display = ("usager", "drink", "date")
 
 
 class DrinkAdmin(admin.ModelAdmin):
-    list_display = ('nom',)
+    list_display = ("nom",)
 
 
 admin.site.register(Usager, UsagerAdmin)

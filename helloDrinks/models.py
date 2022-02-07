@@ -17,18 +17,18 @@ class Usager(models.Model):
 class Alcool(models.Model):
     def __str__(self) -> str:
         return self.nom
-    nom = models.CharField(max_length=50)
+    nom = models.CharField(max_length=50, unique=True)
+
+
+class Drink(models.Model):
+    def __str__(self) -> str:
+        return self.nom
+    nom = models.CharField(max_length=50, unique=True)
 
 
 class DrinkHistorique(models.Model):
     def __str__(self) -> str:
         return '{} - {}'.format(self.usager, self.alcool)
     usager = models.ForeignKey(Usager, on_delete=models.CASCADE)
-    alcool = models.ForeignKey(Alcool, on_delete=models.CASCADE)
+    drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
     date = models.DateTimeField()
-
-
-class Drink(models.Model):
-    def __str__(self) -> str:
-        return self.nom
-    nom = models.CharField(max_length=50)

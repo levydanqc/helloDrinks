@@ -1,3 +1,10 @@
+// "success": #bfff00,
+$success: #ff0000;
+
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
+
+$success: #ff0000;
+
 * {
   box-sizing: border-box;
 }
@@ -27,7 +34,10 @@ img {
     object-position: right;
   }
   &.thumbnail {
-    object-fit: none;
+    object-fit: contain;
+  }
+  &.svg {
+    width: 5rem;
   }
 }
 

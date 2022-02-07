@@ -1,8 +1,8 @@
-from random import random
+import random
 from django.shortcuts import redirect, render
 from matplotlib.image import thumbnail
 from .forms import UsagerForm
-from .models import Usager
+from .models import DrinkHistorique, Usager, Drink
 import requests
 
 
@@ -32,6 +32,16 @@ def usager(request, usager_id):
 def choixDrink(request, usager_id):
     usager = Usager.objects.get(id=usager_id)
     cocktails = requests.get(
-        "www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s" % usager.alcoolPref)
-    choix = random.sample(cocktails.json()["drinks"], 3)
-    return render(request, 'helloDrinks/choixdrink.html')
+        "http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s" % usager.alcoolPref).json()["drinks"]
+
+    for cocktail in cocktails:
+        if drink := Drink.objects.filter(nom=cocktail["strDrink"]).first() \
+                and DrinkHistorique.objects.filter(drink=drink.id).exists():
+            cocktails.remove(cocktail)
+
+    list = []
+    for cocktail in random.sample(cocktails, 3):
+        list.append(requests.get(
+            "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % cocktail["idDrink"]).json()["drinks"][0])
+
+    return render(request, 'helloDrinks/choixdrink.html', {'cocktails': list})

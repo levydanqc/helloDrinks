@@ -40,6 +40,9 @@ img {
   &.svg {
     width: 5rem;
   }
+  &.icon {
+    width: 2rem;
+  }
 }
 
 .card {
@@ -67,7 +70,7 @@ img {
   left: 0;
   top: 0;
   opacity: 0;
-  animation: disappear 2.5s ease-in-out forwards;
+  animation: disappear 3.5s ease-in forwards;
   & .success {
     @extend .w-100;
     @extend .fs-2;

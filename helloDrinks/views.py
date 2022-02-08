@@ -54,13 +54,19 @@ def choixDrink(request, usager_id):
                 cocktails.remove(cocktail)
 
         if len(cocktails) > 3:
-            for cocktail in random.sample(cocktails, 3):
-                choix.append(requests.get(
-                    "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % urllib.parse.quote(cocktail["idDrink"])).json()["drinks"][0])
-        else:
-            choix = cocktails
+            cocktails = random.sample(cocktails, 3)
+        for cocktail in cocktails:
+            choix.append(requests.get(
+                "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % urllib.parse.quote(cocktail["idDrink"])).json()["drinks"][0])
 
         saveDrink(choix)
+
+        for drink in choix:
+            drink["ingredients"] = []
+            for key, value in drink.items():
+                if "strIngredient" in key and value:
+                    drink["ingredients"].append({"ingredient": value, "mesure": drink.get(
+                        "strMeasure" + key[-1])})
 
     return render(request, 'helloDrinks/choixdrink.html', {'cocktails': choix, 'usager': usager})
 

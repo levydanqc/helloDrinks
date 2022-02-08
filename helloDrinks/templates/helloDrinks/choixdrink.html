@@ -33,6 +33,21 @@
           {% if drink.strInstructionsFR != None %} {{drink.strInstructionsFR}}
           {% else %} {{drink.strInstructions}} {% endif %}
         </p>
+
+        <div class="d-flex align-items-center border-top pt-1">
+          <img class="icon" src="{% static 'helloDrinks/assets/pipette.svg' %}" />
+          <h3 class="my-1">Ingrédients</h3>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-start">
+        {% for ingredient in drink.ingredients %}
+          <div class="d-flex flex-column align-items-center mx-2 my-3">
+            <p class="m-0">{{ingredient.ingredient}}</p>
+            <sub>{{ingredient.mesure}}</sub>
+          </div>
+        {% endfor %}
+        </div>
+
       </div>
       <div class="card-footer text-center">
         <a href="{% url 'orderDrink' usager_id=usager.id drink_name=drink.strDrink %}" class="fs-1 w-100 btn btn-success">Commander</a>

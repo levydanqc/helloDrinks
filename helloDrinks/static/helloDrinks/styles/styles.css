@@ -8237,6 +8237,9 @@ img.thumbnail {
 img.svg {
   width: 5rem; }
 
+img.icon {
+  width: 2rem; }
+
 .card:hover {
   animation: 0.3s linear forwards scaling; }
 
@@ -8255,7 +8258,7 @@ img.svg {
   left: 0;
   top: 0;
   opacity: 0;
-  animation: disappear 2.5s ease-in-out forwards; }
+  animation: disappear 3.5s ease-in forwards; }
 
 .messages .success {
   list-style-position: inside;

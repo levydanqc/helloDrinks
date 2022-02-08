@@ -18,6 +18,10 @@ body {
   height: 100%;
 }
 
+header {
+  z-index: 1;
+}
+
 img {
   &.left,
   &.right {
@@ -55,7 +59,43 @@ img {
   }
 }
 
+.messages {
+  @extend .w-100;
+  @extend .position-absolute;
+  @extend .p-0;
+  list-style: none;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  animation: disappear 2.5s ease-in-out forwards;
+  & .success {
+    @extend .w-100;
+    @extend .fs-2;
+    @extend .px-3;
+    @extend .px-4;
+    list-style-position: inside;
+    background-color: $success;
+    color: white;
+  }
+}
+
 // Animations
+@keyframes disappear {
+  0% {
+    opacity: 0;
+    z-index: 5;
+  }
+  30% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: -5;
+  }
+}
 @keyframes scroll {
   0% {
     object-position: 0%;

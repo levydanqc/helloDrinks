@@ -3,7 +3,7 @@ from datetime import datetime
 from django.shortcuts import redirect, render
 from matplotlib.image import thumbnail
 from .forms import UsagerForm
-from .models import DrinkHistorique, Usager, Drink
+from .models import *
 import requests
 from django.contrib import messages
 
@@ -33,42 +33,50 @@ def usager(request, usager_id):
 
 def choixDrink(request, usager_id):
     usager = Usager.objects.get(id=usager_id)
-    cocktails = requests.get(
+    cocktails_api = requests.get(
         "http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s" % usager.alcoolPref.nom).json()["drinks"]
 
-    list = []
+    random.shuffle(cocktails_api)
+    cocktails = cocktails_api.copy()
+    choix = []
     if len(cocktails) > 0:
-        for cocktail in cocktails:
+        for cocktail in cocktails_api:
             if len(cocktails) <= 3:
                 break
             drink = Drink.objects.filter(nom=cocktail["strDrink"]).first()
-            if drink and DrinkHistorique.objects.filter(drink=drink.id).exists():
+            if drink and DrinkHistorique.objects.filter(drink=drink).exists():
                 cocktails.remove(cocktail)
 
-        for cocktail in random.sample(cocktails, 3):
-            list.append(requests.get(
-                "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % cocktail["idDrink"]).json()["drinks"][0])
+        if len(cocktails) > 3:
+            for cocktail in random.sample(cocktails, 3):
+                choix.append(requests.get(
+                    "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % cocktail["idDrink"]).json()["drinks"][0])
+        else:
+            choix = cocktails
 
-    return render(request, 'helloDrinks/choixdrink.html', {'cocktails': list})
+        saveDrink(choix)
+
+    return render(request, 'helloDrinks/choixdrink.html', {'cocktails': choix, 'usager': usager})
 
 
-def savetoDB(request, usager, drink):
-    if DrinkHistorique.objects.filter(usager=usager.id).count() >= 5:
+def saveDrink(list):
+    for cocktail in list:
+        Drink.objects.get_or_create(nom=cocktail["strDrink"])
+
+
+def saveOrder(request, usager, drink):
+    if DrinkHistorique.objects.filter(usager=usager).count() >= 5:
         oldest = DrinkHistorique.objects.filter(
-            usager=usager.id).order_by('date').first()
+            usager=usager).order_by('date').first()
         oldest.delete()
     DrinkHistorique.objects.create(
-        usager=usager, drink=drink.id, date=datetime.now())
+        usager=usager, drink=drink, date=datetime.now())
     messages.add_message(request, messages.SUCCESS,
                          'Le kit %s a bien été commandé !' % drink.nom)
 
 
-
-
-
-
-def order(_, usager_id, drink_id):
+def order(request, usager_id, drink_name):
     usager = Usager.objects.get(id=usager_id)
-    drink = DrinkHistorique.objects.filter(drink=drink_id).first()
-    savetoDB(_, usager, drink)
-    return redirect('choixDrink', usager_id=usager_id, permanent=True)
+    drink = Drink.objects.filter(nom=drink_name).first()
+    saveOrder(request, usager, drink)
+    return redirect('choixDrink', usager_id=usager_id)

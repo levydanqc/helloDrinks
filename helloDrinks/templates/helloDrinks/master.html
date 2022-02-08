@@ -22,7 +22,6 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="{% static 'helloDrinks/styles/styles.css' %}"
@@ -36,7 +35,7 @@
   </head>
   <body>
     <header class="bg-white w-100">
-      <a href="">
+      <a href="{% url 'index' %}">
         <img
           class="logo"
           src="{% static 'helloDrinks/assets/logo.png' %}"

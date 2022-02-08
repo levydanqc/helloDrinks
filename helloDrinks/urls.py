@@ -18,7 +18,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('<int:usager_id>/', views.usager, name="usager"),
-    path('<int:usager_id>/choixDrink/', views.choixDrink, name="choixDrink")
-
-
+    path('<int:usager_id>/choixDrink/', views.choixDrink, name="choixDrink"),
+    path('<int:usager_id>/choixDrink/<str:drink_name>/order',
+         views.order, name="orderDrink")
 ]

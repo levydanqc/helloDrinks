@@ -5564,7 +5564,7 @@ fieldset:disabled .btn {
 .position-relative {
   position: relative !important; }
 
-.position-absolute {
+.position-absolute, .messages {
   position: absolute !important; }
 
 .position-fixed {
@@ -5699,7 +5699,7 @@ fieldset:disabled .btn {
 .w-75 {
   width: 75% !important; }
 
-.w-100 {
+.w-100, .messages, .messages .success {
   width: 100% !important; }
 
 .w-auto {
@@ -6046,7 +6046,7 @@ fieldset:disabled .btn {
 .ms-auto {
   margin-left: auto !important; }
 
-.p-0 {
+.p-0, .messages {
   padding: 0 !important; }
 
 .p-1 {
@@ -6076,11 +6076,11 @@ fieldset:disabled .btn {
   padding-right: 0.5rem !important;
   padding-left: 0.5rem !important; }
 
-.px-3 {
+.px-3, .messages .success {
   padding-right: 1rem !important;
   padding-left: 1rem !important; }
 
-.px-4 {
+.px-4, .messages .success {
   padding-right: 1.5rem !important;
   padding-left: 1.5rem !important; }
 
@@ -6190,7 +6190,7 @@ fieldset:disabled .btn {
 .fs-1 {
   font-size: calc(1.375rem + 1.5vw) !important; }
 
-.fs-2 {
+.fs-2, .messages .success {
   font-size: calc(1.325rem + 0.9vw) !important; }
 
 .fs-3 {
@@ -8176,7 +8176,7 @@ fieldset:disabled .btn {
 @media (min-width: 1200px) {
   .fs-1 {
     font-size: 2.5rem !important; }
-  .fs-2 {
+  .fs-2, .messages .success {
     font-size: 2rem !important; }
   .fs-3 {
     font-size: 1.75rem !important; }
@@ -8218,6 +8218,9 @@ main {
 body {
   height: 100%; }
 
+header {
+  z-index: 1; }
+
 img.left, img.right {
   object-fit: cover;
   animation: 25s linear infinite scroll; }
@@ -8246,6 +8249,30 @@ img.svg {
 
 .btn-success:active {
   scale: 0.95; }
+
+.messages {
+  list-style: none;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  animation: disappear 2.5s ease-in-out forwards; }
+
+.messages .success {
+  list-style-position: inside;
+  background-color: #007f45;
+  color: white; }
+
+@keyframes disappear {
+  0% {
+    opacity: 0;
+    z-index: 5; }
+  30% {
+    opacity: 1; }
+  60% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    z-index: -5; } }
 
 @keyframes scroll {
   0% {

@@ -2,6 +2,7 @@ import random
 from datetime import datetime
 from django.shortcuts import redirect, render
 from matplotlib.image import thumbnail
+import urllib.parse
 from .forms import UsagerForm
 from .models import *
 import requests
@@ -21,8 +22,11 @@ def index(request):
     return render(request, 'helloDrinks/index.html', {'form': form})
 
 
-def usager(request, usager_id):
-    usager = Usager.objects.get(id=usager_id)
+def usager(request, user):
+    if isinstance(user, int):
+        usager = Usager.objects.get(id=user)
+    else:
+        usager = Usager.objects.get(pseudo=user)
     alcool = requests.get(
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=%s" % usager.alcoolPref)
     ingredients = alcool.json()["ingredients"]
@@ -34,12 +38,14 @@ def usager(request, usager_id):
 def choixDrink(request, usager_id):
     usager = Usager.objects.get(id=usager_id)
     cocktails_api = requests.get(
-        "http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s" % usager.alcoolPref.nom).json()["drinks"]
+        "http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s" % urllib.parse.quote(usager.alcoolPref.nom))
 
-    random.shuffle(cocktails_api)
-    cocktails = cocktails_api.copy()
     choix = []
-    if len(cocktails) > 0:
+    cocktails = []
+    if len(cocktails_api.content):
+        cocktails_api = cocktails_api.json()["drinks"]
+        random.shuffle(cocktails_api)
+        cocktails = cocktails_api.copy()
         for cocktail in cocktails_api:
             if len(cocktails) <= 3:
                 break
@@ -50,7 +56,7 @@ def choixDrink(request, usager_id):
         if len(cocktails) > 3:
             for cocktail in random.sample(cocktails, 3):
                 choix.append(requests.get(
-                    "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % cocktail["idDrink"]).json()["drinks"][0])
+                    "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % urllib.parse.quote(cocktail["idDrink"])).json()["drinks"][0])
         else:
             choix = cocktails
 

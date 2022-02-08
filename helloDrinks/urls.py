@@ -17,7 +17,8 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path('', views.index, name="index"),
-    path('<int:usager_id>/', views.usager, name="usager"),
+    path('<int:user>/', views.usager, name="usager"),
+    path('<slug:user>/', views.usager, name="usager_slug"),
     path('<int:usager_id>/choixDrink/', views.choixDrink, name="choixDrink"),
     path('<int:usager_id>/choixDrink/<str:drink_name>/order',
          views.order, name="orderDrink")

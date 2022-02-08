@@ -3,19 +3,19 @@ from .models import Usager, Alcool, DrinkHistorique, Drink
 
 
 class UsagerAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'nom', 'prenom', 'email', 'alcoolPref')
+    list_display = ('__str__', 'nom', 'prenom', 'email', 'alcoolPref', 'id', )
 
 
 class AlcoolAdmin(admin.ModelAdmin):
-    list_display = ('nom',)
+    list_display = ('nom', 'id', )
 
 
 class DrinkHistoriqueAdmin(admin.ModelAdmin):
-    list_display = ("usager", "drink", "date")
+    list_display = ('usager', 'drink', 'drink_id', 'date', 'id', )
 
 
 class DrinkAdmin(admin.ModelAdmin):
-    list_display = ("nom",)
+    list_display = ('nom', 'id', )
 
 
 admin.site.register(Usager, UsagerAdmin)

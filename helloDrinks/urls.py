@@ -19,4 +19,6 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('<int:usager_id>/', views.usager, name="usager"),
     path('<int:usager_id>/choixDrink/', views.choixDrink, name="choixDrink")
+
+
 ]

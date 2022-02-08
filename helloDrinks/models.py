@@ -28,7 +28,7 @@ class Drink(models.Model):
 
 class DrinkHistorique(models.Model):
     def __str__(self) -> str:
-        return '{} - {}'.format(self.usager, self.alcool)
+        return '{} - {}'.format(self.usager, self.drink)
     usager = models.ForeignKey(Usager, on_delete=models.CASCADE)
     drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
     date = models.DateTimeField()

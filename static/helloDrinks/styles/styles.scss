@@ -1,0 +1,129 @@
+$success: #007f45;
+@import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+img.logo {
+  width: 10%;
+}
+
+main {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+header {
+  z-index: 1;
+}
+
+img {
+  &.left,
+  &.right {
+    object-fit: cover;
+    animation: 25s linear infinite scroll;
+  }
+  &.left {
+    object-position: left;
+  }
+  &.right {
+    object-position: right;
+  }
+  &.thumbnail {
+    object-fit: contain;
+  }
+  &.svg {
+    width: 5rem;
+  }
+  &.icon {
+    width: 2rem;
+  }
+}
+
+.card {
+  &:hover {
+    animation: 0.3s linear forwards scaling;
+  }
+}
+
+.btn-success {
+  box-shadow: 0.1rem 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  &:hover {
+    background-color: #006d43;
+    box-shadow: none;
+  }
+  &:active {
+    scale: 0.95;
+  }
+}
+
+.messages {
+  @extend .w-100;
+  @extend .position-absolute;
+  @extend .p-0;
+  list-style: none;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  animation: disappear 3.5s ease-in forwards;
+  & .success {
+    @extend .w-100;
+    @extend .fs-2;
+    @extend .px-3;
+    @extend .px-4;
+    list-style-position: inside;
+    background-color: $success;
+    color: white;
+  }
+}
+
+// Animations
+@keyframes disappear {
+  0% {
+    opacity: 0;
+    z-index: 5;
+  }
+  30% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: -5;
+  }
+}
+@keyframes scroll {
+  0% {
+    object-position: 0%;
+  }
+
+  100% {
+    object-position: 100%;
+  }
+}
+@keyframes scaling {
+  0% {
+    scale: 1;
+    box-shadow: none;
+    z-index: 1;
+  }
+
+  50% {
+    scale: 1.05;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  100% {
+    scale: 1.1;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+}

@@ -15,7 +15,7 @@ def index(request):
 
         if form.is_valid():
             form.save()
-            return redirect(usager, usager_id=form.instance.id)
+            return redirect(usager, user=form.instance.id)
     else:
         form = UsagerForm()
 

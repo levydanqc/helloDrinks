@@ -50,7 +50,7 @@
 
       </div>
       <div class="card-footer text-center">
-        <a href="{% url 'orderDrink' usager_id=usager.id drink_name=drink.strDrink %}" class="fs-1 w-100 btn btn-success">Commander</a>
+        <a href="{% url 'order_drink' usager.id drink.strDrink %}" class="fs-1 w-100 btn btn-success">Commander</a>
       </div>
     </div>
   </div>

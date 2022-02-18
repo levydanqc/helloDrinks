@@ -7,7 +7,7 @@ from .forms import UsagerForm
 from .models import *
 import requests
 from django.contrib import messages
-
+import django.http
 
 def index(request):
     if request.method == 'POST':
@@ -35,7 +35,7 @@ def usager(request, user):
     return render(request, 'helloDrinks/usager.html', {'usager': usager, 'ingredients': ingredients, "thumbnail": str(thumbnail.status_code)})
 
 
-def choixDrink(request, usager_id):
+def choix(request, usager_id):
     usager = Usager.objects.get(id=usager_id)
     cocktails_api = requests.get(
         "http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=%s" % urllib.parse.quote(usager.alcoolPref.nom))
@@ -59,8 +59,6 @@ def choixDrink(request, usager_id):
             choix.append(requests.get(
                 "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=%s" % urllib.parse.quote(cocktail["idDrink"])).json()["drinks"][0])
 
-        saveDrink(choix)
-
         for drink in choix:
             drink["ingredients"] = []
             for key, value in drink.items():
@@ -68,27 +66,37 @@ def choixDrink(request, usager_id):
                     drink["ingredients"].append({"ingredient": value, "mesure": drink.get(
                         "strMeasure" + key[-1])})
 
-    return render(request, 'helloDrinks/choixdrink.html', {'cocktails': choix, 'usager': usager})
-
+    response = render(request, 'helloDrinks/choixdrink.html', {'cocktails': choix, 'usager': usager})
+    response.set_cookie('nb_cocktails', len(cocktails_api))
+    return response
 
 def saveDrink(list):
     for cocktail in list:
         Drink.objects.get_or_create(nom=cocktail["strDrink"])
 
 
-def saveOrder(request, usager, drink):
-    if DrinkHistorique.objects.filter(usager=usager).count() >= 5:
-        oldest = DrinkHistorique.objects.filter(
-            usager=usager).order_by('date').first()
-        oldest.delete()
+def saveOrder(request, usager, drink, unique):
+    if not unique and DrinkHistorique.objects.filter(usager=usager).count() >= 5:
+        DrinkHistorique.objects.filter(
+            usager=usager).order_by('date').first().delete()
+    elif unique and DrinkHistorique.objects.filter(usager=usager).exists():
+        DrinkHistorique.objects.filter(
+                usager=usager).first().delete()
+    
     DrinkHistorique.objects.create(
-        usager=usager, drink=drink, date=datetime.now())
+            usager=usager, drink=drink, date=datetime.now())
+    Drink.objects.get_or_create(nom=drink.nom)
     messages.add_message(request, messages.SUCCESS,
                          'Le kit %s a bien été commandé !' % drink.nom)
 
 
 def order(request, usager_id, drink_name):
+    nb_cocktails = request.COOKIES['nb_cocktails']
     usager = Usager.objects.get(id=usager_id)
     drink = Drink.objects.filter(nom=drink_name).first()
-    saveOrder(request, usager, drink)
-    return redirect('choixDrink', usager_id=usager_id)
+
+    if 4 <= int(nb_cocktails) <= 7:
+        saveOrder(request, usager, drink, True)
+    elif int(nb_cocktails) > 7:
+        saveOrder(request, usager, drink, False)
+    return redirect('choix', usager_id=usager_id)

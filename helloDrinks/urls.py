@@ -19,7 +19,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('<int:user>/', views.usager, name="usager"),
     path('<slug:user>/', views.usager, name="usager_slug"),
-    path('<int:usager_id>/choixDrink/', views.choixDrink, name="choixDrink"),
-    path('<int:usager_id>/choixDrink/<str:drink_name>/order',
-         views.order, name="orderDrink")
+    path('<int:usager_id>/choixdrink/', views.choix, name="choix_drink"),
+    path('<int:usager_id>/choixdrink/<str:drink_name>/order',
+         views.order, name="order_drink")
 ]

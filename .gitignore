@@ -6,3 +6,4 @@ venv*
 node_modules
 ~*
 consignes
+.DS_Store

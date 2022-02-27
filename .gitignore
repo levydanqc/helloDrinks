@@ -7,3 +7,4 @@ node_modules
 ~*
 consignes
 .DS_Store
+.env

@@ -100,4 +100,4 @@ def order(request, usager_id, drink_name):
         saveOrder(request, usager, drink, True)
     elif int(nb_cocktails) > 7:
         saveOrder(request, usager, drink, False)
-    return redirect('choix', usager_id=usager_id)
+    return redirect('choix_drink', usager_id=usager_id)

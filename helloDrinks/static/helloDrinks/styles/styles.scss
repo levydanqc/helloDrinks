@@ -20,6 +20,18 @@ body {
 
 header {
   z-index: 1;
+  background-color: red;
+
+}
+
+input {
+  @extend .form-control;
+  @extend .my-2;
+}
+
+select {
+  @extend .form-select;
+  @extend .my-2;
 }
 
 img {

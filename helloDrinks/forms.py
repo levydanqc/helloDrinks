@@ -1,27 +1,20 @@
 import datetime
 import re
-from tabnanny import verbose
 from django import forms
-from .models import Usager
+from .models import Usager, Alcool
 
 
 class UsagerForm(forms.Form):
-    nom = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control my-2'}), required=False)
-    prenom = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control my-2'}), required=False)
-    email = forms.CharField(widget=forms.EmailInput(
-        attrs={'class': 'form-control my-2'}), required=False)
-    pseudo = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control my-2'}), required=False)
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-control my-2'}), required=False)
-    adresse = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control my-2'}), required=False)
-    ddn = forms.CharField(widget=forms.DateInput(attrs={
-        'class': 'form-control my-2', 'type': 'date'}), required=False, label="Date de naissance")
-    alcoolPref = forms.CharField(widget=forms.Select(
-        attrs={'class': 'form-control my-2'}), required=False, label="Alcool préféré")
+    nom = forms.CharField(widget=forms.TextInput(), required=False)
+    prenom = forms.CharField(widget=forms.TextInput(), required=False)
+    email = forms.CharField(widget=forms.EmailInput(), required=False)
+    pseudo = forms.CharField(widget=forms.TextInput(), required=False)
+    password = forms.CharField(widget=forms.PasswordInput(), required=False)
+    adresse = forms.CharField(widget=forms.TextInput(), required=False)
+    ddn = forms.CharField(widget=forms.DateInput(),
+                          required=False, label="Date de naissance")
+    alcoolPref = forms.ModelChoiceField(
+        queryset=Alcool.objects.all(), label="Alcool préféré", required=False)
 
     def clean_nom(self):
         nom = self.cleaned_data['nom']
